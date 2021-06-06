@@ -34,11 +34,15 @@ exports.register = [
 			});
 		}),
 	body("password").isLength({ min: 6 }).trim().withMessage("Password must be 6 characters or greater."),
+	body("userType").isLength({ min: 5 }).trim().withMessage("User Type must be 5 characters or greater."),
+	body("gitUrl").isLength({ min: 7 }).trim().withMessage("git Url must be 7 characters or greater."),
 	// Sanitize fields.
 	sanitizeBody("firstName").escape(),
 	sanitizeBody("lastName").escape(),
 	sanitizeBody("email").escape(),
 	sanitizeBody("password").escape(),
+	sanitizeBody("userType").escape(),
+	sanitizeBody("gitUrl").escape(),
 	// Process request after validation and sanitization.
 	(req, res) => {
 		try {
@@ -59,14 +63,16 @@ exports.register = [
 							lastName: req.body.lastName,
 							email: req.body.email,
 							password: hash,
-							confirmOTP: otp
+							confirmOTP: otp,
+							userType,
+							gitUrl
 						}
 					);
 					// Html email body
 					let html = "<p>Please Confirm your Account.</p><p>OTP: "+otp+"</p>";
 					// Send confirmation email
 					mailer.send(
-						constants.confirmEmails.from, 
+						constants.confirmEmails.from,
 						req.body.email,
 						"Confirm Account",
 						html
@@ -188,7 +194,7 @@ exports.verifyConfirm = [
 								//Update user as confirmed
 								UserModel.findOneAndUpdate(query, {
 									isConfirmed: 1,
-									confirmOTP: null 
+									confirmOTP: null
 								}).catch(err => {
 									return apiResponse.ErrorResponse(res, err);
 								});
@@ -237,7 +243,7 @@ exports.resendConfirmOtp = [
 							let html = "<p>Please Confirm your Account.</p><p>OTP: "+otp+"</p>";
 							// Send confirmation email
 							mailer.send(
-								constants.confirmEmails.from, 
+								constants.confirmEmails.from,
 								req.body.email,
 								"Confirm Account",
 								html

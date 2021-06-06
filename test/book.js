@@ -14,16 +14,16 @@ const BookModel = require("../models/BookModel");
 
 describe("Book", () => {
 	//Before each test we empty the database
-	before((done) => { 
-		BookModel.deleteMany({}, (err) => { 
-			done();           
-		});        
+	before((done) => {
+		BookModel.deleteMany({}, (err) => {
+			done();
+		});
 	});
 
 	// Prepare data for testing
 	const userTestData = {
 		"password":"Test@123",
-		"email":"maitraysuthar@test12345.com"
+		"email":"avinashjsdev@test12345.com"
 	};
 
 	// Prepare data for testing

@@ -11,12 +11,12 @@ const UserModel = require("../models/UserModel");
  */
 
 describe("Auth", () => {
-  
+
 	// Before each test we empty the database
-	before((done) => { 
-		UserModel.deleteMany({}, (err) => { 
-			done();           
-		});        
+	before((done) => {
+		UserModel.deleteMany({}, (err) => {
+			done();
+		});
 	});
 
 	// Prepare data for testing
@@ -24,7 +24,7 @@ describe("Auth", () => {
 		"firstName":"test",
 		"lastName":"testing",
 		"password":"Test@123",
-		"email":"maitraysuthar@test12345.com"
+		"email":"avinashjsdev@test12345.com"
 	};
 
 	/*
@@ -58,7 +58,7 @@ describe("Auth", () => {
 				});
 		});
 	});
-  
+
 	/*
   * Test the /POST route
   */
@@ -85,7 +85,7 @@ describe("Auth", () => {
 				.send({"email": testData.email})
 				.end((err, res) => {
 					res.should.have.status(200);
-					UserModel.findOne({_id: testData._id},"confirmOTP").then((user)=>{                
+					UserModel.findOne({_id: testData._id},"confirmOTP").then((user)=>{
 						testData.confirmOTP = user.confirmOTP;
 						done();
 					});
