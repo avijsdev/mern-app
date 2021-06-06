@@ -215,7 +215,7 @@ exports.JobApplied = [
 									if (err) {
 										return apiResponse.ErrorResponse(res, err);
 									} else {
-										let JobData = new jobData(Job);
+										let JobData = new jobData(foundJob);
 										return apiResponse.successResponseWithData(res, "Job update Success.", JobData);
 									}
 								});
