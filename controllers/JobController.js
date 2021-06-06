@@ -1,4 +1,4 @@
-const Job = require("../models/JobModel");
+const JobModel = require("../models/JobModel");
 const { body, validationResult } = require("express-validator");
 const { sanitizeBody } = require("express-validator");
 const apiResponse = require("../helpers/apiResponse");
@@ -12,7 +12,6 @@ function jobData(data) {
 	this.title = data.title;
 	this.description = data.description;
 	this.date = data.date;
-	this.user = data.user;
 	this.cost = data.cost;
 	this.status = data.status;
 	this.owner = data.owner;
@@ -30,15 +29,23 @@ exports.JobListByApplicantId = [
 	auth,
 	function (req, res) {
 		try {
-			Job.find({
+			if (!req.params.userId) {
+				return apiResponse.successResponseWithData(res, "Operation success", []);
+			}
+			JobModel.find({
 				applicants: {
 					$in: [
-						mongoose.Types.ObjectId(req.params.userId)
+						req.params.userId
 					]
 				}
-			}, "_id title description createdAt").then((Jobs) => {
+			}).then((Jobs) => {
 				if (Jobs.length > 0) {
-					return apiResponse.successResponseWithData(res, "Operation success", Jobs);
+					let JobData = [];
+					Jobs.forEach(job => {
+						let data = new jobData(job);
+						JobData.push(data);
+					});
+					return apiResponse.successResponseWithData(res, "Operation success", JobData);
 				} else {
 					return apiResponse.successResponseWithData(res, "Operation success", []);
 				}
@@ -63,11 +70,12 @@ exports.JobList = [
 	auth,
 	function (req, res) {
 		try {
-			Job.find().then((Jobs) => {
+			JobModel.find().then((Jobs) => {
 				if (Jobs.length > 0) {
 					let JobData = [];
 					Jobs.forEach(job => {
-						JobData.push(jobData(job));
+						let data = new jobData(job);
+						JobData.push(data);
 					});
 					return apiResponse.successResponseWithData(res, "Operation success", JobData);
 				} else {
@@ -95,11 +103,12 @@ exports.JobsByEmail = [
 			return apiResponse.successResponseWithData(res, "Operation success", []);
 		}
 		try {
-			Job.find({ email: req.params.email }, "_id title description createdAt").then((Jobs) => {
+			JobModel.find({ email: req.params.email }).then((Jobs) => {
 				if (Jobs.length > 0) {
 					let JobData = [];
 					Jobs.forEach(job => {
-						JobData.push(jobData(job));
+						let data = new jobData(job);
+						JobData.push(data);
 					});
 					return apiResponse.successResponseWithData(res, "Operation success", JobData);
 				} else {
@@ -138,7 +147,7 @@ exports.addJob = [
 				return apiResponse.validationErrorWithData(res, "Validation Error.", errors.array());
 			}
 			else {
-				var Job = new Job(
+				var Job = new JobModel(
 					{
 						title: req.body.title,
 						description: req.body.description,
@@ -153,7 +162,7 @@ exports.addJob = [
 				//Save Job.
 				Job.save(function (err) {
 					if (err) { return apiResponse.ErrorResponse(res, err); }
-					let JobData = new JobData(Job);
+					let JobData = new jobData(Job);
 					return apiResponse.successResponseWithData(res, "Job add Success.", JobData);
 				});
 			}
@@ -180,7 +189,7 @@ exports.JobApplied = [
 	(req, res) => {
 		try {
 			const errors = validationResult(req);
-			var Job = new Job();
+			// var Job = new JobModel();
 
 			if (!errors.isEmpty()) {
 				return apiResponse.validationErrorWithData(res, "Validation Error.", errors.array());
@@ -191,22 +200,22 @@ exports.JobApplied = [
 				} else if (!mongoose.Types.ObjectId.isValid(req.body.applicantId)) {
 					return apiResponse.validationErrorWithData(res, "Invalid Error.", "Invalid Applicant ID");
 				} else {
-					Job.findById(req.body.jobId, function (err, foundJob) {
+					JobModel.findById(req.body.jobId, function (err, foundJob) {
 						if (foundJob === null) {
 							return apiResponse.notFoundResponse(res, "Job not exists with this id");
 						} else {
 							//Check authorized user
-							if (foundJob.applicants.find(req.body.applicantId)) {
+							if (foundJob.applicants.includes(req.body.applicantId)) {
 								return apiResponse.unauthorizedResponse(res, "You have already applied for this Job.");
 							} else {
 								//update Job.
 								delete foundJob._id;
 								foundJob.applicants.push(req.body.applicantId);
-								Job.findByIdAndUpdate(req.body.id, foundJob, {}, function (err) {
+								JobModel.findByIdAndUpdate(req.body.jobId, foundJob, {}, function (err) {
 									if (err) {
 										return apiResponse.ErrorResponse(res, err);
 									} else {
-										let JobData = new JobData(Job);
+										let JobData = new jobData(Job);
 										return apiResponse.successResponseWithData(res, "Job update Success.", JobData);
 									}
 								});

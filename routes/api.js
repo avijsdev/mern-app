@@ -5,6 +5,6 @@ var jobRouter = require("./job");
 var app = express();
 
 app.use("/auth/", authRouter);
-app.use("/book/", jobRouter);
+app.use("/job/", jobRouter);
 
 module.exports = app;
