@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams} from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 
 import './style.css';
 import Developer from '../../components/Developer';
@@ -7,10 +7,22 @@ import Employer from '../../components/Employer';
 
 function HomeDashboard({ classes }) {
     let { id } = useParams();
+    const history = useHistory();
     const userName = sessionStorage.getItem('username');
+    const handleLogout = () => {
+        sessionStorage.setItem("username", null);
+        sessionStorage.setItem('token', null);
+        sessionStorage.setItem('userId', null);
+        sessionStorage.setItem('email', null);
+        sessionStorage.setItem('gitUrl', null);
+        history.push('/');
+    }
     return (
         <div>
-            <p className="title">{`Hello ${id} ${userName}!!`}</p>
+            <header className="title">
+                <span>{`Hello ${id} ${userName}!!`}</span>
+                <span className="logout" onClick={handleLogout} title="logout">&#10094;</span>
+            </header>
             <div className="content">
                 {id === 'freelancer' ? <Developer /> : <Employer />}
             </div>

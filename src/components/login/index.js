@@ -18,7 +18,7 @@ function Login({ title, submit, classes }) {
         }
     }
     return (
-        <div container className="login">
+        <div className="login">
             <label type="h3" >{`${title} Sign In`}</label>
             <input
                 type="text"
