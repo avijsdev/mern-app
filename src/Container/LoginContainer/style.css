@@ -1,0 +1,27 @@
+.container {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: gainsboro;
+}
+
+.paper {
+    background-color: whitesmoke;
+    width: 400px;
+    padding: 10px;
+}
+
+.paper>span {
+    text-align: center;
+    display: block;
+    margin: 20px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+@media screen and (max-width: 600px) {
+    .container {
+        align-items: stretch;
+    }
+}

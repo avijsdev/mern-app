@@ -1,0 +1,15 @@
+.left{
+    width: 75vw;
+}
+.right{
+    width: 25vw;
+}
+
+@media screen and (max-width: 600px) {
+    .left {
+        width: 100%;
+    }
+    .right{
+        width: 100%;
+    }
+}

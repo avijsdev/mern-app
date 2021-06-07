@@ -1,0 +1,38 @@
+.projects {
+    border: 1px solid;
+    padding: 5px;
+    margin: 0 3px;
+    height: 89vh;
+    overflow: auto;
+    overflow-x: hidden;
+}
+
+.title {
+    border-bottom: 1px solid;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.name {
+    margin: 10px 0px;
+    font-size: 20px;
+    font-weight: bold;
+    padding-bottom: 5px;
+    opacity: 0.8;
+}
+
+.desc {
+    margin: 10px 0px;
+    padding-bottom: 5px;
+    opacity: 0.6;
+}
+
+.git-detail {
+    border-bottom: 1px solid grey;
+    padding: 16px 0;
+}
+
+.git-detail>p {
+    font-size: 15px;
+    text-align: center;
+}

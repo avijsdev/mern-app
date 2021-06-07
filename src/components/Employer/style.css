@@ -1,0 +1,22 @@
+.emp-content {
+    width: 100vw;
+}
+
+.post-btn {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.post-btn>button {
+    width: 10%;
+    padding: 10px;
+}
+
+@media screen and (max-width: 600px) {
+    .emp-content {
+        width: 100%;
+    }
+    .small {
+        width: 10% !important;
+    }
+}

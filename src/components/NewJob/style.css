@@ -1,0 +1,23 @@
+.new-job {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border: 1px solid;
+    justify-content: center;
+    align-items: center;
+}
+
+.new-job input {
+    margin-bottom: 10px;
+    padding: 5px;
+    width: 50vw;
+}
+.new-job button{
+    padding: 10px;
+}
+
+@media screen and (max-width: 600px) {
+    .new-job input {
+        width: 100%;
+    }
+}

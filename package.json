@@ -4,12 +4,19 @@
   "private": true,
   "author": "Avinash Kumar",
   "scripts": {
-    "start": "node ./bin/www",
+    "start": "node ./bin/www & react-scripts start -y",
     "dev": "nodemon ./bin/www",
     "test": "nyc _mocha --timeout 10000 --exit --report lcovonly -- -R spec",
-    "lint": "eslint --fix --config .eslintrc.json \"**/*.js\""
+    "lint": "eslint --fix --config .eslintrc.json \"**/*.js\"",
+    "start-ui": "react-scripts start",
+    "build": "react-scripts build",
+    "test-ui": "react-scripts test",
+    "eject": "react-scripts eject"
   },
   "dependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.4.1",
+    "@testing-library/user-event": "^7.2.1",
     "bcrypt": "^3.0.6",
     "codacy-coverage": "^3.4.0",
     "cookie-parser": "~1.4.3",
@@ -24,7 +31,11 @@
     "moment": "^2.24.0",
     "mongoose": "^5.7.6",
     "morgan": "~1.9.0",
-    "nodemailer": "^6.3.1"
+    "nodemailer": "^6.3.1",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "^3.4.4"
   },
   "devDependencies": {
     "chai": "^4.2.0",
@@ -33,5 +44,20 @@
     "mocha": "^6.2.2",
     "nodemon": "^1.19.4",
     "nyc": "^14.1.1"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

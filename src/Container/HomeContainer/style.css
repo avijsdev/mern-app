@@ -1,0 +1,18 @@
+.title {
+    font-size: 20px;
+    font-weight: bolder;
+    background: cornflowerblue;
+    padding: 15px 0;
+}
+
+.content {
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+@media screen and (max-width: 600px) {
+    .content {
+        flex-direction: column;
+    }
+}

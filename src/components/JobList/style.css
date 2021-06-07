@@ -1,0 +1,64 @@
+.job-list {
+    margin: 10px 0;
+    height: 80vh;
+    overflow: auto;
+    border: 1px solid;
+    padding: 5px;
+}
+
+.job-list>article {
+    padding: 10px;
+    border: 1px solid gray;
+    margin: 5px 0;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+    border-bottom: 1px solid grey;
+    padding: 5px 0;
+}
+
+.header>span {
+    font-weight: 500;
+    max-width: 90%;
+    padding: 5px 0;
+}
+.header>button{
+    width: 10%;
+    background: aliceblue;
+    padding: 10px;
+}
+
+.job-list>span {
+    max-width: 90%;
+    display: inline-block;
+}
+
+.job-list>article>p {
+    font-size: 15px;
+}
+.job-list>article>p>span {
+    color: black;
+    font-weight: bold;
+}
+
+.details {
+    display: flex;
+    justify-content: space-between;
+}
+
+.details span {
+    opacity: 0.6;
+}
+
+@media screen and (max-width: 600px) {
+    .header,.details {
+        flex-direction: column;
+    }
+    .details span {
+        margin: 5px 0;
+    }
+}
